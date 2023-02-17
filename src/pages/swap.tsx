@@ -78,7 +78,7 @@ async function dec(count, count1){
         var token_add = "0x3a76C55C6BEF5Cb38A405c767C1d33F91aF20Ed1";
         console.log("PB");
       }  else if( count.coin == 4) { //DF
-        var token_add = "0x774f896898C91Cf0afc69AEA135435fD7aec31a6";
+        var token_add = "0x65f1AE40b0C34fA6BAC1D085944749E35Ff4AaD2";
         //var token_add =　"0xE48c9a452Aa932CB38831f8fB91fe62a20523A18";  //test net address
         console.log("DF");
       } else {
@@ -89,7 +89,7 @@ async function dec(count, count1){
       const accounts = await web3.eth.requestAccounts();
 
       let token_contract = new web3.eth.Contract(tokenABI, token_add);
-      var allowance = await token_contract.methods.allowance(accounts[0],"0x3ff0e4bfbfe599f83321c728de213087ab49f605").call();
+      var allowance = await token_contract.methods.allowance(accounts[0],"0xbcd8bea341159447ab09cd9b06c89a0c16d79127").call();
       
       console.log("allowance");
       console.log(allowance);
@@ -100,7 +100,7 @@ async function dec(count, count1){
       }
 
 
-      let swap_contract = new web3.eth.Contract(ABI, "0x3ff0e4bfbfe599f83321c728de213087ab49f605");
+      let swap_contract = new web3.eth.Contract(ABI, "0xbcd8bea341159447ab09cd9b06c89a0c16d79127");
 
       console.log(count.coin);
       console.log(count.value);
@@ -216,7 +216,7 @@ async function dec(count, count1){
         params: [
             {
                 from: accounts[0],
-                to: "0x3ff0e4bfbfe599f83321c728de213087ab49f605",  //BUSD Contract Address
+                to: "0xbcd8bea341159447ab09cd9b06c89a0c16d79127",  //BUSD Contract Address
                 data: dataFie,
                 gas: 'e0684',
             },
@@ -273,7 +273,7 @@ async function dec_approve(count, count1){
     var token_add = "0x3a76C55C6BEF5Cb38A405c767C1d33F91aF20Ed1";
     console.log("PB");
   }  else if( count.coin == 4) { //DF
-    var token_add = "0x774f896898C91Cf0afc69AEA135435fD7aec31a6";
+    var token_add = "0x65f1AE40b0C34fA6BAC1D085944749E35Ff4AaD2";
     //var token_add =　"0xE48c9a452Aa932CB38831f8fB91fe62a20523A18";  //test net address
     console.log("DF");
   } else {
@@ -290,7 +290,7 @@ async function dec_approve(count, count1){
   var heko = BigInt(100000*Math.pow(10, 18));
 
   // pool contract address
-  var dataFie = token_contract.methods.approve("0x3ff0e4bfbfe599f83321c728de213087ab49f605", heko).encodeABI(); 
+  var dataFie = token_contract.methods.approve("0xbcd8bea341159447ab09cd9b06c89a0c16d79127", heko).encodeABI(); 
 
   window.ethereum.request({
     method: 'eth_sendTransaction',

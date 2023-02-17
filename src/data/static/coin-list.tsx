@@ -30,7 +30,7 @@ export const coinList: CoinType[] = [
   {
     id: CURRENCY_ID.DF,
     icon: <Doge />,
-    name: 'DF TOKEN',
+    name: 'XDF TOKEN',
   },
   {
     id: CURRENCY_ID.PB,

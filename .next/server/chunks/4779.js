@@ -146,7 +146,7 @@ const coinList = [
     {
         id: _constants__WEBPACK_IMPORTED_MODULE_5__/* .CURRENCY_ID.DF */ .Qi.DF,
         icon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_icons_doge__WEBPACK_IMPORTED_MODULE_4__/* .Doge */ .S, {}),
-        name: "DF TOKEN"
+        name: "XDF TOKEN"
     },
     {
         id: _constants__WEBPACK_IMPORTED_MODULE_5__/* .CURRENCY_ID.PB */ .Qi.PB,

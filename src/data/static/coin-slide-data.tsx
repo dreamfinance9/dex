@@ -7,7 +7,7 @@ import BinanceImage from '@/assets/images/coin/binance.svg';
 export const coinSlideData = [
   {
     id: '0',
-    name: 'DF TOKEN',
+    name: 'XDF TOKEN',
     symbol: 'USDT',
     balance: '0.10',
     usdBalance: '',
