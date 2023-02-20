@@ -981,7 +981,7 @@ async function checkStatus(num) {
     //var token_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
     var timer = await stake_contract.methods.claimable_df(accounts[0]).call(); 
     var claimed_df = await stake_contract.methods.claimable_df(accounts[0]).call(); ; //DF
-    console.log(claimed_df);
+    var staking_flag = await stake_contract.methods.status_list(accounts[0]).call(); ; //DF
     console.log("DF");
   } else if( num == 9) { //ATOM
     var token_add = atom_lp;
@@ -999,10 +999,18 @@ async function checkStatus(num) {
   console.log(timer);
   let token_contract = new web3.eth.Contract(tokenABI, token_add);
   var balance = await token_contract.methods.balanceOf(accounts[0]).call()/Math.pow(10, 18);
+  console.log("balance");
   console.log(balance);
-  console.log(claimed_df);
-  timer = claimed_df/Math.pow(10, 18);
-  document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " DF";
+  if(staking_flag["staking_flag"] == 0 && balance > 0){
+    var minutes = await stake_contract.methods.check_apy_a(accounts[0]).call(); ; //DF
+    console.log("min");
+    console.log(minutes);
+    timer = balance*minutes*0.000000425;
+    document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " XDF";
+  } else {
+    timer = claimed_df/Math.pow(10, 18);
+    document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " XDF";
+  }
 }
 
 type SortListProps = {

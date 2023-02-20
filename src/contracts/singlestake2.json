@@ -108,6 +108,10 @@
 			{
 				"name": "amount",
 				"type": "uint256"
+			},
+			{
+				"name": "staking_flag",
+				"type": "uint256"
 			}
 		],
 		"payable": false,

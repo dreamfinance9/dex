@@ -18,7 +18,7 @@ const coinIcons: Record<CoinList, JSX.Element> = {
   USDC: <Usdc />,
   DAI: <Dai />,
   LOT: <Lot />,
-  DF: <Doge />,
+  XDF: <Doge />,
   ATOM: <Atom />,
 };
 
