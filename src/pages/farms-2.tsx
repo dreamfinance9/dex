@@ -108,7 +108,7 @@ async function buttonApprove(num) {
   if (num < 6){
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
   } else if(num == 8){
-    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
+    var stake_ad = "0x8645F4c2081e98505888A1B9E64f612029150c5B";
   } else if(num == 9){
     var stake_ad = "0x2e4217f14209078bd9751b4a7bb9fd182c8b08f5";
   } else {
@@ -218,7 +218,7 @@ async function buttonApproveLP(num) {
   if (num < 6){
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
   } else if(num == 8){
-    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
+    var stake_ad = "0x8645F4c2081e98505888A1B9E64f612029150c5B";
   } else if(num == 9){
     var stake_ad = "0x2e4217f14209078bd9751b4a7bb9fd182c8b08f5";
   } else {
@@ -267,7 +267,7 @@ async function buttonStake(num, amount, affiliateId: string) {
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
     var stake_contract = new web3.eth.Contract(ABI, stake_ad);
   } else if(num == 8) { //FARM 2
-    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
+    var stake_ad = "0x8645F4c2081e98505888A1B9E64f612029150c5B";
     var stake_contract = new web3.eth.Contract(ABI_b, stake_ad);
     console.log("stake 2")
   } else if(num == 9){
@@ -531,7 +531,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
     var stake_contract = new web3.eth.Contract(ABI, stake_ad);
   } else if(num == 8) { //FARM 2
-    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
+    var stake_ad = "0x8645F4c2081e98505888A1B9E64f612029150c5B";
     var stake_contract = new web3.eth.Contract(ABI_b, stake_ad);
     console.log("stake 2")
   } else if(num == 9){
@@ -898,7 +898,7 @@ async function checkStatus(num) {
     var stake_contract = new web3.eth.Contract(ABI, stake_ad);
     console.log("stake 0");
   } else if(num == 8) { //FARM 2
-    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
+    var stake_ad = "0x8645F4c2081e98505888A1B9E64f612029150c5B";
     var stake_contract = new web3.eth.Contract(ABI_b, stake_ad);
     console.log(stake_ad);
     console.log("stake 2 DF");
