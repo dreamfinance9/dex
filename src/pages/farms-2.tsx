@@ -90,7 +90,8 @@ async function buttonApprove(num) {
     //var lptoken_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
     console.log("APPROVE DAI");
   } else if( num == 8) { //DF
-    var token_add = "0x774f896898C91Cf0afc69AEA135435fD7aec31a6";
+    //var token_add = "0x774f896898C91Cf0afc69AEA135435fD7aec31a6"; past df
+    var token_add = "0x65f1AE40b0C34fA6BAC1D085944749E35Ff4AaD2";
     var lptoken_add = "0x164F9eC5Feb771809F437C32f487934E21333A6b";
     //var token_add =　"0x86616097d9b59B9f02a25caBD8b5f537629208BA";  //test net address
     //var lptoken_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
@@ -107,7 +108,7 @@ async function buttonApprove(num) {
   if (num < 6){
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
   } else if(num == 8){
-    var stake_ad = "0xc25adf7eeff71123bd0348678dbfdad01d2d1f93";
+    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
   } else if(num == 9){
     var stake_ad = "0x2e4217f14209078bd9751b4a7bb9fd182c8b08f5";
   } else {
@@ -199,7 +200,8 @@ async function buttonApproveLP(num) {
     //var lptoken_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
     console.log("APPROVE DAI");
   } else if( num == 8) { //DF
-  var token_add = "0x774f896898C91Cf0afc69AEA135435fD7aec31a6";
+  //var token_add = "0x774f896898C91Cf0afc69AEA135435fD7aec31a6"; past df
+  var token_add = "0x65f1AE40b0C34fA6BAC1D085944749E35Ff4AaD2";
   var lptoken_add = "0x164F9eC5Feb771809F437C32f487934E21333A6b";
   //var token_add =　"0x86616097d9b59B9f02a25caBD8b5f537629208BA";  //test net address
   //var lptoken_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
@@ -216,7 +218,7 @@ async function buttonApproveLP(num) {
   if (num < 6){
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
   } else if(num == 8){
-    var stake_ad = "0xc25adf7eeff71123bd0348678dbfdad01d2d1f93";
+    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
   } else if(num == 9){
     var stake_ad = "0x2e4217f14209078bd9751b4a7bb9fd182c8b08f5";
   } else {
@@ -265,7 +267,7 @@ async function buttonStake(num, amount, affiliateId: string) {
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
     var stake_contract = new web3.eth.Contract(ABI, stake_ad);
   } else if(num == 8) { //FARM 2
-    var stake_ad = "0xc25adf7eeff71123bd0348678dbfdad01d2d1f93";
+    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
     var stake_contract = new web3.eth.Contract(ABI_b, stake_ad);
     console.log("stake 2")
   } else if(num == 9){
@@ -432,11 +434,11 @@ async function buttonStake(num, amount, affiliateId: string) {
         return 0;
       };
       console.log("DAI");
-    }  else if( num == 8) { //nonAFFI-----------------------------------------STAKE----DF
+    }  else if( num == 8) { //nonAFFI-----------------------------------------STAKE----DF STAKE
       var dataFie = stake_contract.methods.pool_df(heko, 0).encodeABI();
       var apy_d = await stake_contract.methods.check_apy_a(accounts[0]).call();
-      console.log(apy_d);
-      if(apy_d < 27713197 && apy_d >0){
+      var flag = await stake_contract.methods.status_list(accounts[0]).call();
+      if(flag["staking_flag"] == 1){
         alert("YOU NEED TO UNSTAKE to GET DF")
         return 0;
       };
@@ -529,7 +531,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
     var stake_ad = "0xbdd600f24ed7dcb440fd591875e1a7bcf908afcd";
     var stake_contract = new web3.eth.Contract(ABI, stake_ad);
   } else if(num == 8) { //FARM 2
-    var stake_ad = "0xc25adf7eeff71123bd0348678dbfdad01d2d1f93";
+    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
     var stake_contract = new web3.eth.Contract(ABI_b, stake_ad);
     console.log("stake 2")
   } else if(num == 9){
@@ -659,13 +661,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
         alert("YOU NEED TO POOL")
         return 0;
       };
-      let LP_token = new web3.eth.Contract(tokenABI, df_lp); //DF
-      var lp_num = await LP_token.methods.balanceOf(accounts[0]).call();
-      var lp_num = amount;
-      var claimed_df = lp_num*apy_a*0.0000004792; //DF
-      console.log(claimed_df);
-      var claimed_heko = BigInt(Math.round(Math.pow(10, 18)*claimed_df)).toString();
-      var dataFie = stake_contract.methods.unpool_df(heko, claimed_heko, affiliateId).encodeABI(); 
+      var dataFie = stake_contract.methods.unpool_df(heko, affiliateId).encodeABI(); 
       console.log("UNPOOL DF");
     } else if( num == 9) { //AFFI------------------------------------------------------apy_a_ATOM
       var apy_e = await stake_contract.methods.check_apy_a(accounts[0]).call();
@@ -786,28 +782,16 @@ async function buttonUnstake(num, amount, affiliateId: string) {
         alert("YOU NEED TO POOL")
         return 0;
       };
-      let LP_token = new web3.eth.Contract(tokenABI, dai_lp); //DAI
-      var lp_num = await LP_token.methods.balanceOf(accounts[0]).call(); //DAI
-      var lp_num = amount;
-      var claimed_df = lp_num*apy_e*0.0000001806; //DAI
-      console.log(claimed_df);
-      var claimed_heko = BigInt(Math.round(Math.pow(10, 18)*claimed_df)).toString();
-      var dataFie = stake_contract.methods.unpool_dai(heko, claimed_heko, 0).encodeABI(); 
+      var dataFie = stake_contract.methods.unpool_dai(heko, 0).encodeABI(); 
       console.log("UNPOOL DAI");
     } else if( num == 8) { //NON--AFFI------------------------------------------------------apy_a____DF
       var apy_a = await stake_contract.methods.check_apy_a(accounts[0]).call();
       console.log(apy_a);
-      if(apy_a >= 27713197){
+      if(apy_a >= 10000000000){
         alert("YOU NEED TO POOL")
         return 0;
       };
-      let LP_token = new web3.eth.Contract(tokenABI, df_lp); //BUSD
-      var lp_num = await LP_token.methods.balanceOf(accounts[0]).call();
-      var lp_num = amount;
-      var claimed_df = lp_num*apy_a*0.0000004792; //DF
-      console.log(claimed_df);
-      var claimed_heko = BigInt(Math.round(Math.pow(10, 18)*claimed_df)).toString();
-      var dataFie = stake_contract.methods.unpool_df(heko, claimed_heko, 0).encodeABI(); 
+      var dataFie = stake_contract.methods.unpool_df(heko, 0).encodeABI(); 
       console.log("UNPOOL DF");
     } else if( num == 9) { //NON--AFFI------------------------------------------------------apy_a_ATOM
       var apy_e = await stake_contract.methods.check_apy_a(accounts[0]).call();
@@ -914,9 +898,10 @@ async function checkStatus(num) {
     var stake_contract = new web3.eth.Contract(ABI, stake_ad);
     console.log("stake 0");
   } else if(num == 8) { //FARM 2
-    var stake_ad = "0xc25adf7eeff71123bd0348678dbfdad01d2d1f93";
+    var stake_ad = "0xCC43db210DdE6cB6349Bd366CCaCa00976D7B0A1";
     var stake_contract = new web3.eth.Contract(ABI_b, stake_ad);
-    console.log("stake 2");
+    console.log(stake_ad);
+    console.log("stake 2 DF");
   } else if(num == 9) { //FARM 3
     var stake_ad = "0x2e4217f14209078bd9751b4a7bb9fd182c8b08f5";
     var stake_contract = new web3.eth.Contract(ABI_b, stake_ad);
@@ -994,11 +979,9 @@ async function checkStatus(num) {
   } else if( num == 8) { //DF
     var token_add = df_lp;
     //var token_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
-    var timer = await stake_contract.methods.check_apy_a(accounts[0]).call(); 
-    if (timer > 27692966){
-      timer = 0;
-    }
-    var claimed_df = timer*0.0000004792; //DF
+    var timer = await stake_contract.methods.claimable_df(accounts[0]).call(); 
+    var claimed_df = await stake_contract.methods.claimable_df(accounts[0]).call(); ; //DF
+    console.log(claimed_df);
     console.log("DF");
   } else if( num == 9) { //ATOM
     var token_add = atom_lp;
@@ -1018,7 +1001,7 @@ async function checkStatus(num) {
   var balance = await token_contract.methods.balanceOf(accounts[0]).call()/Math.pow(10, 18);
   console.log(balance);
   console.log(claimed_df);
-  timer = balance*claimed_df;
+  timer = claimed_df/Math.pow(10, 18);
   document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " DF";
 }
 
