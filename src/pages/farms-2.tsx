@@ -352,8 +352,8 @@ async function buttonStake(num, amount, affiliateId: string) {
     } else if( num == 8) { //DF
       var dataFie = stake_contract.methods.pool_df(heko, affiliateId).encodeABI();
       var apy_d = await stake_contract.methods.check_apy_a(accounts[0]).call();
-      console.log(apy_d);
-      if(apy_d < 27713197 && apy_d >0){
+      var flag = await stake_contract.methods.status_list(accounts[0]).call();
+      if(flag["staking_flag"] == 1){
         alert("YOU NEED TO UNSTAKE to GET DF")
         return 0;
       };
@@ -890,12 +890,8 @@ async function checkStatus(num) {
     console.log("BUSD");
   }  else if( num == 6) { //LOT
     var token_add = lot_lp;
-    //var token_add =　"0x2b4c00ca2445e86ca356632e0f3fc9c75efd3ba4";  //test net address
-    var timer = await stake_contract.methods.check_apy_a(accounts[0]).call(); 
-    if (timer > 27692966){
-      timer = 0;
-    }
-    var claimed_df = timer*0.0000003406; //DAI
+    var claimable_token = await stake_contract.methods.claimable_df(accounts[0]).call(); //LOT
+    var staking_flag = await stake_contract.methods.status_list(accounts[0]).call()["staking_flag"]; ; //LOT
     console.log("LOT");
   } else if( num == 7) { //DAI
     var token_add = dai_lp;
@@ -908,10 +904,17 @@ async function checkStatus(num) {
     console.log("DAI");
   } else if( num == 8) { //DF
     var token_add = df_lp;
-    //var token_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
-    var timer = await stake_contract.methods.claimable_df(accounts[0]).call(); 
     var claimable_token = await stake_contract.methods.claimable_df(accounts[0]).call(); //DF
-    var staking_flag = await stake_contract.methods.status_list(accounts[0]).call()["staking_flag"]; ; //DF
+    var timer = await stake_contract.methods.check_apy_a(accounts[0]).call(); //DF
+    console.log(timer);
+    var staking_flag = await stake_contract.methods.status_list(accounts[0]).call()["staking_flag"]; //DF
+    var minutes = await stake_contract.methods.check_apy_a(accounts[0]).call(); //DF
+    console.log("min");
+    console.log(minutes);
+    let token_contract = new web3.eth.Contract(tokenABI, token_add);
+    var balance = await token_contract.methods.balanceOf(accounts[0]).call()/Math.pow(10, 18);
+    timer = balance*minutes*0.000000425;
+    console.log(timer);
     console.log("DF");
   } else if( num == 9) { //ATOM
     var token_add = atom_lp;
@@ -924,20 +927,17 @@ async function checkStatus(num) {
   } else {
     console.log("NOT REGISTERED ADD")
   }
-  let token_contract = new web3.eth.Contract(tokenABI, token_add);
-  var balance = await token_contract.methods.balanceOf(accounts[0]).call()/Math.pow(10, 18);
-  console.log("balance");
-  console.log(balance);
-  if(staking_flag == 0 && balance > 0){
-    var minutes = await stake_contract.methods.check_apy_a(accounts[0]).call(); //DF
-    console.log("min");
-    console.log(minutes);
-    timer = balance*minutes*0.000000425;
-    document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " XDF";
+
+  if(num == 8 && balance > 0){
+    console.log("DF")
   } else {
+    let token_contract = new web3.eth.Contract(tokenABI, token_add);
+    var balance = await token_contract.methods.balanceOf(accounts[0]).call()/Math.pow(10, 18);
     timer = claimable_token/Math.pow(10, 18);
-    document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " XDF";
+    console.log("NOT DF MIN")
   }
+  document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " XDF";
+
 }
 
 type SortListProps = {
