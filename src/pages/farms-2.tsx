@@ -112,7 +112,7 @@ async function buttonApprove(num) {
   } else if(num == 9){
     var stake_ad = "0x461a884970f430128CdDD40CCf92D4ce562a04B0";
   } else {
-    var stake_ad = "0x64E0624f06DD6e5a17c375E7decB8fAaE0AF5578";
+    var stake_ad = "0xbEe38fa110f76d9385Fa96d32Cb9914DDAc4B57d";
   }
 
   const accounts = await web3.eth.requestAccounts();
@@ -223,7 +223,7 @@ async function buttonApproveLP(num) {
     var stake_ad = "0x461a884970f430128CdDD40CCf92D4ce562a04B0";
   } else {
     console.log("LOT or DAI")
-    var stake_ad = "0x64E0624f06DD6e5a17c375E7decB8fAaE0AF5578";
+    var stake_ad = "0xbEe38fa110f76d9385Fa96d32Cb9914DDAc4B57d";
   }
 
   const accounts = await web3.eth.requestAccounts();
@@ -275,7 +275,7 @@ async function buttonStake(num, amount, affiliateId: string) {
     var stake_contract = new web3.eth.Contract(ABI_c, stake_ad);
     console.log("stake 3")
   } else { //FARM 1
-    var stake_ad = "0x64E0624f06DD6e5a17c375E7decB8fAaE0AF5578";
+    var stake_ad = "0xbEe38fa110f76d9385Fa96d32Cb9914DDAc4B57d";
     var stake_contract = new web3.eth.Contract(ABI_a, stake_ad);
     console.log("stake 1")
   }
@@ -334,8 +334,8 @@ async function buttonStake(num, amount, affiliateId: string) {
     }  else if( num == 6) { //LOT
       var dataFie = stake_contract.methods.pool_lot(heko, affiliateId).encodeABI();
       var apy_d = await stake_contract.methods.check_apy_a(accounts[0]).call();
-      console.log(apy_d);
-      if(apy_d < 27713197 && apy_d >0){
+      var flag = await stake_contract.methods.status_list(accounts[0]).call();
+      if(flag["staking_flag_a"] == 1){
         alert("YOU NEED TO UNSTAKE to GET DF")
         return 0;
       };
@@ -343,8 +343,8 @@ async function buttonStake(num, amount, affiliateId: string) {
     }  else if( num == 7) { //DAI
       var dataFie = stake_contract.methods.pool_dai(heko, affiliateId).encodeABI();
       var apy_d = await stake_contract.methods.check_apy_b(accounts[0]).call();
-      console.log(apy_d);
-      if(apy_d < 27713197 && apy_d >0){
+      var flag = await stake_contract.methods.status_list(accounts[0]).call();
+      if(flag["staking_flag_b"] == 1){
         alert("YOU NEED TO UNSTAKE to GET DF")
         return 0;
       };
@@ -415,8 +415,8 @@ async function buttonStake(num, amount, affiliateId: string) {
     }  else if( num == 6) { //nonAFFI-----------------------------------------STAKE----LOT
       var dataFie = stake_contract.methods.pool_lot(heko, 0).encodeABI();
       var apy_d = await stake_contract.methods.check_apy_a(accounts[0]).call();
-      console.log(apy_d);
-      if(apy_d < 27713197 && apy_d >0){
+      var flag = await stake_contract.methods.status_list(accounts[0]).call();
+      if(flag["staking_flag_a"] == 1){
         alert("YOU NEED TO UNSTAKE to GET DF")
         return 0;
       };
@@ -424,8 +424,8 @@ async function buttonStake(num, amount, affiliateId: string) {
     }  else if( num == 7) { //nonAFFI-----------------------------------------STAKE----DAI
       var dataFie = stake_contract.methods.pool_dai(heko, 0).encodeABI();
       var apy_d = await stake_contract.methods.check_apy_b(accounts[0]).call();
-      console.log(apy_d);
-      if(apy_d < 27713197 && apy_d >0){
+      var flag = await stake_contract.methods.status_list(accounts[0]).call();
+      if(flag["staking_flag_b"] == 1){
         alert("YOU NEED TO UNSTAKE to GET DF")
         return 0;
       };
@@ -535,7 +535,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
     var stake_contract = new web3.eth.Contract(ABI_c, stake_ad);
     console.log("stake 3")
   } else {
-    var stake_ad = "0x64E0624f06DD6e5a17c375E7decB8fAaE0AF5578";
+    var stake_ad = "0xbEe38fa110f76d9385Fa96d32Cb9914DDAc4B57d";
     var stake_contract = new web3.eth.Contract(ABI_a, stake_ad);
   }
 
@@ -605,14 +605,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
         alert("YOU NEED TO POOL")
         return 0;
       };
-      let LP_token = new web3.eth.Contract(tokenABI, lot_lp); //LOT
-      var lp_num = await LP_token.methods.balanceOf(accounts[0]).call();
-      var lp_num = amount;
-      var claimed_df = lp_num*apy_e*0.0000003406; //LOT
-      console.log(claimed_df);
-      var claimed_heko = BigInt(Math.round(Math.pow(10, 18)*claimed_df)).toString();
-      console.log(claimed_heko);
-      var dataFie = stake_contract.methods.unpool_lot(heko, claimed_heko, affiliateId).encodeABI(); 
+      var dataFie = stake_contract.methods.unpool_lot(heko, affiliateId).encodeABI(); 
       console.log("UNPOOL LOT");
     }  else if( num == 7) { //AFFI------------------------------------------------------apy_b_DAI
       var apy_e = await stake_contract.methods.check_apy_b(accounts[0]).call();
@@ -621,13 +614,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
         alert("YOU NEED TO POOL")
         return 0;
       };
-      let LP_token = new web3.eth.Contract(tokenABI, dai_lp); //BUSD
-      var lp_num = await LP_token.methods.balanceOf(accounts[0]).call();
-      var lp_num = amount;
-      var claimed_df = lp_num*apy_e*0.0000001906; //DAI
-      console.log(claimed_df);
-      var claimed_heko = BigInt(Math.round(Math.pow(10, 18)*claimed_df)).toString();
-      var dataFie = stake_contract.methods.unpool_dai(heko, claimed_heko, affiliateId).encodeABI(); 
+      var dataFie = stake_contract.methods.unpool_dai(heko, affiliateId).encodeABI(); 
       console.log("UNPOOL DAI");
     }  else if( num == 8) { //AFFI------------------------------------------------------apy_a_DF
       var apy_a = await stake_contract.methods.check_apy_a(accounts[0]).call();
@@ -711,13 +698,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
         alert("YOU NEED TO LOT")
         return 0;
       };
-      let LP_token = new web3.eth.Contract(tokenABI, lot_lp); //LOT
-      var lp_num = await LP_token.methods.balanceOf(accounts[0]).call();
-      var lp_num = amount;
-      var claimed_df = lp_num*apy_e*0.0000003406; //LOT
-      console.log(claimed_df);
-      var claimed_heko = BigInt(Math.round(Math.pow(10, 18)*claimed_df)).toString();
-      var dataFie = stake_contract.methods.unpool_lot(heko, claimed_heko, 0).encodeABI(); 
+      var dataFie = stake_contract.methods.unpool_lot(heko, 0).encodeABI(); 
       console.log("UNPOOL BUSD");
     }  else if( num == 7) { //NON--AFFI------------------------------------------------------apy_b_DAI
       var apy_e = await stake_contract.methods.check_apy_b(accounts[0]).call();
@@ -844,7 +825,7 @@ async function checkStatus(num) {
     var stake_contract = new web3.eth.Contract(ABI_c, stake_ad);
     console.log("stake 3");
   } else {
-    var stake_ad = "0x64E0624f06DD6e5a17c375E7decB8fAaE0AF5578";
+    var stake_ad = "0xbEe38fa110f76d9385Fa96d32Cb9914DDAc4B57d";
     var stake_contract = new web3.eth.Contract(ABI_a, stake_ad);
     console.log("stake 1");
   }
@@ -890,17 +871,14 @@ async function checkStatus(num) {
     console.log("BUSD");
   }  else if( num == 6) { //LOT
     var token_add = lot_lp;
-    var claimable_token = await stake_contract.methods.claimable_df(accounts[0]).call(); //LOT
+    let token_contract = new web3.eth.Contract(tokenABI, token_add);
+    var balance = await token_contract.methods.balanceOf(accounts[0]).call();
+    var claimable_token = await stake_contract.methods.claimable_lot(accounts[0], balance).call(); //LOT
     var staking_flag = await stake_contract.methods.status_list(accounts[0]).call()["staking_flag"]; ; //LOT
     console.log("LOT");
   } else if( num == 7) { //DAI
     var token_add = dai_lp;
-    //var token_add =　"0x813835627ee585d9e4b913233ab21384003c485d";  //test net address
-    var timer = await stake_contract.methods.check_apy_b(accounts[0]).call(); 
-    if (timer > 27692966){
-      timer = 0;
-    }
-    var claimed_df = timer*0.0000001906; //DAI
+    var claimable_token = await stake_contract.methods.claimable_dai(accounts[0]).call(); //DAI
     console.log("DAI");
   } else if( num == 8) { //DF
     var token_add = df_lp;
