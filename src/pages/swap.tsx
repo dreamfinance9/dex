@@ -365,61 +365,49 @@ const SwapPage: NextPageWithLayout = () => {
       <TradeLayout>
         <div className="mb-5 border-b border-dashed border-gray-200 pb-5 dark:border-gray-800 xs:mb-7 xs:pb-6">
           <div className="relative flex gap-3 flex-col">
-            <CoinInput
-              label={'From'}
-              amountInDF={ amountInDF }
-              currencyId={ selectedCurrencyIds.from }
-              onAmountChange={ setAmountInDF }
-              onCurrencyTypeChange={ setSelectedCurrencyIdFrom }
-              getCoinValue={(data) => setCount(data)}
-            />
-            <div className="absolute top-1/2 left-1/2 z-[1] -mt-4 -ml-4 rounded-full bg-white shadow-large dark:bg-gray-600">
-              <Button
-                size="mini"
-                color="gray"
-                shape="circle"
-                variant="transparent"
-                onClick={ onToggleButtonClick }
-              >
-                <SwapIcon className="h-auto w-3" />
-              </Button>
-            </div>
-            <CoinInput
-              label={'To'}
-              amountInDF={ amountInDF }
-              currencyId={ selectedCurrencyIds.to }
-              onAmountChange={ () => {} }
-              onCurrencyTypeChange={ setSelectedCurrencyIdTo }
-              getCoinValue={(data) => setCount1(data)}
-            />
+            <h3>
+            【Notice】
+            </h3>
+            <p>
+            Due to the discovery of a suspicious transaction
+            We are currently investigating.
+            </p>
+            <p>
+            Swaps are temporarily suspended to protect funds.
+            </p>
+            <p>
+            We apologize for any inconvenience this may cause.
+            Thank you for your patience.
+            </p>
+
+            you would like to swap DF coins to USDT during this time, please contact us at
+            <p>
+            <a href="http://bit.ly/3jAsVgX?openExternalBrowser=1">http://bit.ly/3jAsVgX?openExternalBrowser=1</a>
+            </p>
+
+            <h3>
+            【お知らせ】
+            </h3>
+            <p>
+            XDF→USDTのスワップで
+            不審なトランザクションが発見された為、
+            現在調査中です。
+            </p>
+            <p>
+            資金保護の為現在一時的にスワップを停めております。
+            </p>
+            <p>
+            ご迷惑をおかけして申し訳ございません。
+            よろしくお願い致します。
+            </p>
+
+            この間にDFコインをUSDTにスワップしたい方は
+            <p>
+            <a href="http://bit.ly/3jAsVgX?openExternalBrowser=1">http://bit.ly/3jAsVgX?openExternalBrowser=1</a>
+            </p>
+            コチラのフォームよりご連絡下さいませ。
           </div>
         </div>
-        <div className="flex flex-col gap-4 xs:gap-[18px]">
-          <TransactionInfo label={'Min. Received'} />
-          <TransactionInfo label={'Rate'} />
-          <TransactionInfo label={'Offered by'} />
-          <TransactionInfo label={'Price Slippage'} value={'3%'} />
-          <TransactionInfo label={'Network Fee'} />
-          <TransactionInfo label={'Criptic Fee'} />
-        </div>
-        <Button
-          size="large"
-          shape="rounded"
-          fullWidth={true}
-          className="mt-6 uppercase xs:mt-8 xs:tracking-widest sendEthButton2"
-          onClick={() => dec_approve({ coin: selectedCurrencyIds.from, value: amountInDF }, { coin: selectedCurrencyIds.to })}
-        >
-          APPROVE
-        </Button>
-        <Button
-          size="large"
-          shape="rounded"
-          fullWidth={true}
-          className="mt-6 uppercase xs:mt-8 xs:tracking-widest sendEthButton2"
-          onClick={() => dec({ coin: selectedCurrencyIds.from, value: amountInDF }, { coin: selectedCurrencyIds.to })}
-        >
-          SWAP
-        </Button>
       </TradeLayout>
     </>
   );
