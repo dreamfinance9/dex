@@ -518,6 +518,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
     return 0;
   };
 
+  max_amount =  Math.floor (max_amount * 1000) / 1000;
   if(amount != max_amount){
     alert("YOU NEED TO SPECIFY MAX AMOUNT")
     return 0;
@@ -795,6 +796,7 @@ async function checkmax( id: number ) {
     max_amount = -1;
   }
 
+  max_amount =  Math.floor (max_amount * 1000) / 1000;
   return max_amount;
 }
 
@@ -914,6 +916,7 @@ async function checkStatus(num) {
     timer = claimable_token/Math.pow(10, 18);
     console.log("NOT DF MIN")
   }
+  timer = Math.floor (timer * 100000000) / 100000000;
   document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " XDF";
 
 }
