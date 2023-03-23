@@ -917,6 +917,8 @@ async function checkStatus(num) {
     console.log("NOT DF MIN")
   }
   timer = Math.floor (timer * 100000000) / 100000000;
+  balance = Math.floor (balance * 1000) / 1000;
+
   document.getElementById(num).innerHTML = balance + "LP - You get " + timer + " XDF";
 
 }
