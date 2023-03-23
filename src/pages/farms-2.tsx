@@ -518,7 +518,7 @@ async function buttonUnstake(num, amount, affiliateId: string) {
     return 0;
   };
 
-  max_amount =  Math.floor (max_amount * 1000) / 1000;
+  max_amount =  Math.floor(max_amount * 1000) / 1000;
   if(amount != max_amount){
     alert("YOU NEED TO SPECIFY MAX AMOUNT")
     return 0;
