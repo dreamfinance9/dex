@@ -8,10 +8,10 @@ import { Lot } from '@/components/icons/lot';
 import { Doge } from '@/components/icons/doge';
 import { Atom } from '@/components/icons/atom';
 
-export type CoinList = 'WBTC' | 'WETH' | 'USDT' | 'BUSD' | 'USDC' | 'LOT' | 'DAI' | 'ATOM';
+export type CoinList = 'BTCB' | 'WETH' | 'USDT' | 'BUSD' | 'USDC' | 'LOT' | 'DAI' | 'ATOM';
 
 const coinIcons: Record<CoinList, JSX.Element> = {
-  WBTC: <Bitcoin />,
+  BTCB: <Bitcoin />,
   WETH: <Ethereum />,
   USDT: <Tether />,
   BUSD: <Bnb />,

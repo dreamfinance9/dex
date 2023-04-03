@@ -14,7 +14,7 @@ type FarmData = {
 export const FarmsData: FarmData[] = [
   {
     id: 1,
-    from: 'WBTC',
+    from: 'BTCB',
     to: '' as CoinList,
     earned: 0,
     apr: 2.50,
