@@ -1192,7 +1192,7 @@ const FarmsPage: NextPageWithLayout = () => {
               Earned
             </span>
             <span className="px-8 py-6 text-sm tracking-wider text-gray-500 dark:text-gray-300">
-              APR
+              APY
             </span>
             <span className="hidden px-8 py-6 text-sm tracking-wider text-gray-500 dark:text-gray-300 lg:block">
               Liquidity
