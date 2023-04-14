@@ -42,7 +42,7 @@ export default function FarmList({
         </div>
         <div className="px-4 text-xs font-medium uppercase tracking-wider text-black dark:text-white sm:px-8 sm:text-sm">
           <span className="mb-1 block font-medium text-gray-600 dark:text-gray-400 sm:hidden">
-            APR
+            APY
           </span>
           {apr}%
           <span className="hidden font-normal text-gray-600 dark:text-gray-400 sm:block">
